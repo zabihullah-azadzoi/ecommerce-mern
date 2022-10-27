@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const { ObjectId } = mongoose.Schema;
 
-const userSchema = mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     name: String,
     email: {

@@ -7,6 +7,9 @@ require("dotenv").config({ path: path.join(__dirname, "../.env") });
 
 //requiring routers
 const userRouter = require("./routes/userRoutes");
+const categoryRouter = require("./routes/categoryRoutes");
+const subRouter = require("./routes/subRoutes");
+const productRouter = require("./routes/productRoutes");
 
 //starting the database
 require("./mongoose");
@@ -20,6 +23,9 @@ app.use(morgan("dev"));
 
 //routes
 app.use(userRouter);
+app.use(categoryRouter);
+app.use(subRouter);
+app.use(productRouter);
 
 //starting the server
 const port = process.env.PORT || 8000;
