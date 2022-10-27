@@ -10,6 +10,7 @@ const userRouter = require("./routes/userRoutes");
 const categoryRouter = require("./routes/categoryRoutes");
 const subRouter = require("./routes/subRoutes");
 const productRouter = require("./routes/productRoutes");
+const imagesUploadRouter = require("./routes/imagesUploadRoutes");
 
 //starting the database
 require("./mongoose");
@@ -18,7 +19,7 @@ const app = express();
 
 //middlewares
 app.use(cors());
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "4mb" }));
 app.use(morgan("dev"));
 
 //routes
@@ -26,6 +27,7 @@ app.use(userRouter);
 app.use(categoryRouter);
 app.use(subRouter);
 app.use(productRouter);
+app.use(imagesUploadRouter);
 
 //starting the server
 const port = process.env.PORT || 8000;

@@ -44,9 +44,11 @@ const productSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    //     images: {
-    //       type: Array,
-    //     },
+    images: {
+      type: Array,
+      validate: [imagesValidate, "Only 4 images can be stored for a product!"],
+    },
+
     shipping: {
       type: String,
       enum: ["Yes", "No"],
@@ -71,5 +73,10 @@ const productSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+//validating images array size
+function imagesValidate(value) {
+  return value.length <= 4;
+}
 
 module.exports = mongoose.model("Product", productSchema);

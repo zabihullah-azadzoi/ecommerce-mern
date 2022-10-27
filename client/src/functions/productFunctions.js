@@ -9,3 +9,7 @@ export const createProduct = async (authtoken, product) => {
 export const getCategorySubs = async (id) => {
   return await axios.get(`http://localhost:8000/api/product/subs/${id}`, {});
 };
+
+export const getAllProducts = async (limit) => {
+  return await axios.get(`http://localhost:8000/api/products/${limit}`);
+};

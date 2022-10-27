@@ -10,7 +10,7 @@ const {
 } = require("../controllers/productControllers");
 
 router.post("/api/product", authCheck, adminCheck, createProduct);
-router.get("/api/products", getAllProducts);
+router.get("/api/products/:limit", getAllProducts);
 
 //getting all sub products based on a product id
 router.get("/api/product/subs/:id", getProductSubs);

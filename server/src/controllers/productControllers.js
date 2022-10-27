@@ -20,7 +20,12 @@ exports.createProduct = async (req, res) => {
 
 exports.getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find({}).exec();
+    const products = await Product.find({})
+      .limit(parseInt(req.params.limit))
+      .populate("category")
+      .populate("subs")
+      .sort({ createdAt: -1 })
+      .exec();
     res.json(products);
   } catch (e) {
     res.status(500).json({

@@ -2,9 +2,12 @@ import { useState, useEffect } from "react";
 
 import AdminNavbar from "../../../nav/AdminNavbar";
 import CreateProductForm from "../../../forms/CreateProductForm";
+import ImagesUploadForm from "../../../forms/ImagesUploadForm";
+
 import { createProduct } from "../../../../functions/productFunctions";
 import { getAllCategories } from "../../../../functions/categoryFunctions";
 import { getCategorySubs } from "../../../../functions/productFunctions";
+
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
@@ -18,16 +21,17 @@ const initialState = {
   brand: "",
   category: "",
   subs: [],
+  images: [],
 };
+
+const colors = ["Black", "White", "Red", "Silver", "Blue"];
+const brands = ["Apple", "Samsung", "Hp", "Dell", "Toshiba"];
 
 const CreateProduct = () => {
   const [values, setValues] = useState(initialState);
   const [categories, setCategories] = useState([]);
   const [allSubs, setAllSubs] = useState([]);
   const user = useSelector((state) => state.user);
-
-  const colors = ["Black", "White", "Red", "Silver", "Blue"];
-  const brands = ["Apple", "Samsung", "Hp", "Dell", "Toshiba"];
 
   useEffect(() => {
     getAllCategories()
@@ -75,6 +79,7 @@ const CreateProduct = () => {
         </div>
         <div className="col-md-10">
           <h3>Create new Product</h3>
+          <ImagesUploadForm values={values} setValues={setValues} />
           <CreateProductForm
             valuesChangeHandler={valuesChangeHandler}
             productFormSubmitHandler={productFormSubmitHandler}
