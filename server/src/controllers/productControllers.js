@@ -34,6 +34,25 @@ exports.getAllProducts = async (req, res) => {
   }
 };
 
+exports.deleteProduct = async (req, res) => {
+  try {
+    const deletedProduct = await Product.findOneAndRemove({
+      slug: req.params.slug,
+    });
+    if (deletedProduct) {
+      res.json(deletedProduct);
+    } else {
+      res.status(400).json({
+        message: "couldn't process at the moment, please try again later!",
+      });
+    }
+  } catch (e) {
+    res.status(500).json({
+      error: e.message,
+    });
+  }
+};
+
 exports.getProductSubs = async (req, res) => {
   try {
     const subs = await Sub.find({ parent: req.params.id }).exec();

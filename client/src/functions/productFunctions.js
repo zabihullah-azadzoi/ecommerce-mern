@@ -13,3 +13,9 @@ export const getCategorySubs = async (id) => {
 export const getAllProducts = async (limit) => {
   return await axios.get(`http://localhost:8000/api/products/${limit}`);
 };
+
+export const deleteProduct = async (authtoken, slug) => {
+  return await axios.delete(`http://localhost:8000/api/product/${slug}`, {
+    headers: { authtoken },
+  });
+};

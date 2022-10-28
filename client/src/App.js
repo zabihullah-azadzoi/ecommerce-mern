@@ -30,6 +30,8 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import "./App.css";
+import ProductList from "./components/pages/admin/product/ProductList";
+import UpdateProduct from "./components/pages/admin/product/UpdateProduct";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -101,6 +103,16 @@ const App = () => {
         <AdminProtectedRoute
           path="/admin/product"
           component={CreateProduct}
+          exact
+        />
+        <AdminProtectedRoute
+          path="/admin/products"
+          component={ProductList}
+          exact
+        />
+        <AdminProtectedRoute
+          path="/admin/product/:slug"
+          component={UpdateProduct}
           exact
         />
       </Switch>

@@ -3,7 +3,6 @@ const User = require("../models/User");
 
 exports.authCheck = async (req, res, next) => {
   try {
-    console.log(req.headers.authtoken);
     const user = await admin.auth().verifyIdToken(req.headers.authtoken);
     req.user = user;
     next();
