@@ -20,7 +20,6 @@ const ProductList = () => {
     getAllProducts(20)
       .then((res) => {
         setProducts(res.data);
-        console.log(res.data);
       })
       .catch((e) => {
         toast.error(e.response.data.error);

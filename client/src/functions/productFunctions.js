@@ -14,8 +14,24 @@ export const getAllProducts = async (limit) => {
   return await axios.get(`http://localhost:8000/api/products/${limit}`);
 };
 
+export const getProduct = async (slug) => {
+  return await axios.get(`http://localhost:8000/api/product/${slug}`);
+};
+
 export const deleteProduct = async (authtoken, slug) => {
   return await axios.delete(`http://localhost:8000/api/product/${slug}`, {
     headers: { authtoken },
   });
+};
+
+export const updateProduct = async (authtoken, product, slug) => {
+  return await axios.put(
+    `http://localhost:8000/api/product/${slug}`,
+    {
+      product,
+    },
+    {
+      headers: { authtoken },
+    }
+  );
 };

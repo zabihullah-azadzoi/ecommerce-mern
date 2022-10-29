@@ -1,61 +1,28 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 import AdminNavbar from "../../../nav/AdminNavbar";
 import CreateProductForm from "../../../forms/CreateProductForm";
 import ImagesUploadForm from "../../../forms/ImagesUploadForm";
 
+//custom hook
+import useProductFormStates from "../../../../customHooks/useProductFormStates";
+
 import { createProduct } from "../../../../functions/productFunctions";
-import { getAllCategories } from "../../../../functions/categoryFunctions";
-import { getCategorySubs } from "../../../../functions/productFunctions";
 
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-const initialState = {
-  title: "",
-  description: "",
-  price: 0,
-  quantity: 0,
-  shipping: "",
-  color: "",
-  brand: "",
-  category: "",
-  subs: [],
-  images: [],
-};
-
-const colors = ["Black", "White", "Red", "Silver", "Blue"];
-const brands = ["Apple", "Samsung", "Hp", "Dell", "Toshiba"];
-
 const CreateProduct = () => {
-  const [values, setValues] = useState(initialState);
-  const [categories, setCategories] = useState([]);
-  const [allSubs, setAllSubs] = useState([]);
   const user = useSelector((state) => state.user);
 
-  useEffect(() => {
-    getAllCategories()
-      .then((res) => setCategories(res.data))
-      .catch((e) => toast.error(e.response.data.error));
-  }, []);
+  const { values, setValues, categories, allSubs, valuesChangeHandler } =
+    useProductFormStates();
 
   //getting subs for a category
   const { category } = values;
   useEffect(() => {
     setValues((prevState) => ({ ...prevState, subs: [] }));
-    if (category !== "") {
-      getCategorySubs(category)
-        .then((res) => setAllSubs(res.data))
-        .catch((e) => toast.error(e.response.data.error));
-    }
-  }, [category]);
-
-  const valuesChangeHandler = (e) => {
-    setValues((preValues) => ({
-      ...preValues,
-      [e.target.name]: e.target.value,
-    }));
-  };
+  }, [category, setValues]);
 
   const productFormSubmitHandler = (e) => {
     e.preventDefault();
@@ -84,8 +51,6 @@ const CreateProduct = () => {
             valuesChangeHandler={valuesChangeHandler}
             productFormSubmitHandler={productFormSubmitHandler}
             values={values}
-            colors={colors}
-            brands={brands}
             categories={categories}
             allSubs={allSubs}
             onSetValues={setValues}

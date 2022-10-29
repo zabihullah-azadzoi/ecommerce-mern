@@ -51,7 +51,6 @@ const ImagesUploadForm = ({ values, setValues }) => {
     setIsLoading(true);
     imageRemove(user.token, id)
       .then((res) => {
-        console.log(res);
         setValues((prevState) => ({
           ...prevState,
           images: values.images.filter((img) => img.public_id !== id),

@@ -14,7 +14,6 @@ const defaultImage = require("../../assets/default-product.png");
 const CardComponent = ({ product, deleteProductHandler }) => {
   //delete modal
   const showConfirm = (slug, name) => {
-    console.log(slug);
     Modal.confirm({
       title: `Do you Want to delete ${name} category?`,
       icon: <ExclamationCircleOutlined />,

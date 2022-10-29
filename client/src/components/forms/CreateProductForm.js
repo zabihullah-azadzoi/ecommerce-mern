@@ -4,12 +4,13 @@ const CreateProductForm = ({
   productFormSubmitHandler,
   valuesChangeHandler,
   values,
-  colors,
-  brands,
   categories,
   allSubs,
   onSetValues,
 }) => {
+  const colors = ["Black", "White", "Red", "Silver", "Blue"];
+  const brands = ["Apple", "Samsung", "Hp", "Dell", "Toshiba"];
+
   return (
     <form onSubmit={productFormSubmitHandler}>
       <div className="mb-3">
@@ -70,6 +71,7 @@ const CreateProductForm = ({
           className="form-control"
           name="shipping"
           required
+          value={values.shipping && values.shipping}
           onChange={valuesChangeHandler}
         >
           <option value="">Please Select</option>
@@ -85,6 +87,7 @@ const CreateProductForm = ({
           className="form-control"
           name="color"
           required
+          value={values.color && values.color}
           onChange={valuesChangeHandler}
         >
           <option value="">Please Select</option>
@@ -103,6 +106,7 @@ const CreateProductForm = ({
           className="form-control"
           required
           name="brand"
+          value={values.brand && values.brand}
           onChange={valuesChangeHandler}
         >
           <option value="">Please Select</option>
@@ -121,6 +125,7 @@ const CreateProductForm = ({
           className="form-control"
           name="category"
           required
+          value={values.category && values.category}
           onChange={valuesChangeHandler}
         >
           <option value="">Please Select</option>
@@ -140,7 +145,7 @@ const CreateProductForm = ({
           <Select
             mode="multiple"
             placeholder="Inserted are removed"
-            value={values.subs}
+            value={values.subs && values.subs}
             onChange={(value) =>
               onSetValues((prevState) => ({ ...prevState, subs: value }))
             }
