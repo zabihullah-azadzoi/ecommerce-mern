@@ -10,13 +10,17 @@ const {
   getProduct,
   getProductSubs,
   updateProduct,
+  getProductsCount,
+  ratingProduct,
 } = require("../controllers/productControllers");
 
 router.post("/api/product", authCheck, adminCheck, createProduct);
-router.get("/api/products/:limit", getAllProducts);
+router.get("/api/products", getAllProducts);
+router.get("/api/products/count", getProductsCount);
 router.get("/api/product/:slug", getProduct);
 router.delete("/api/product/:slug", authCheck, adminCheck, deleteProduct);
 router.put("/api/product/:slug", authCheck, adminCheck, updateProduct);
+router.put("/api/product/rating/:id", authCheck, ratingProduct);
 
 // router.get("/api/products", getAllProducts);
 

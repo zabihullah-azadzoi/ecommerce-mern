@@ -11,7 +11,7 @@ const { Meta } = Card;
 //default image if none exist for a product
 const defaultImage = require("../../assets/default-product.png");
 
-const CardComponent = ({ product, deleteProductHandler }) => {
+const AdminProductCard = ({ product, deleteProductHandler }) => {
   //delete modal
   const showConfirm = (slug, name) => {
     Modal.confirm({
@@ -48,10 +48,11 @@ const CardComponent = ({ product, deleteProductHandler }) => {
     >
       <Meta
         title={product.title}
+        className="text-start"
         description={product.description.substring(0, 25) + " ..."}
       />
     </Card>
   );
 };
 
-export default CardComponent;
+export default AdminProductCard;

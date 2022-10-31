@@ -61,15 +61,15 @@ const productSchema = new mongoose.Schema(
       type: String,
       enum: ["Apple", "Samsung", "Hp", "Dell", "Toshiba"],
     },
-    //     ratings: [
-    //       {
-    //         star: Number,
-    //         postedBy: {
-    //           type: ObjectId,
-    //           ref: "User",
-    //         },
-    //       },
-    //     ],
+    ratings: [
+      {
+        star: Number,
+        postedBy: {
+          type: ObjectId,
+          ref: "User",
+        },
+      },
+    ],
   },
   { timestamps: true }
 );
@@ -78,5 +78,18 @@ const productSchema = new mongoose.Schema(
 function imagesValidate(value) {
   return value.length <= 4;
 }
+
+//validating rating number to be smaller than 5
+
+productSchema
+  .path("ratings")
+  .schema.path("star")
+  .validate(function (value) {
+    if (value <= 5) {
+      return true;
+    } else {
+      return false;
+    }
+  }, "Rating number should be smaller or equal to 5");
 
 module.exports = mongoose.model("Product", productSchema);

@@ -1,4 +1,5 @@
 const Product = require("../models/Product");
+const User = require("../models/User");
 const Sub = require("../models/Sub");
 const slugify = require("slugify");
 
@@ -19,15 +20,30 @@ exports.createProduct = async (req, res) => {
 };
 
 exports.getAllProducts = async (req, res) => {
-  // console.log(req.query);
+  const limit = req.query.limit || {};
+  const page = req.query.page || 1;
+  const perPage = 3;
+  const sort = req.query.sort ? { [req.query.sort]: -1 } : { createdAt: -1 };
   try {
     const products = await Product.find({})
-      .limit(parseInt(req.params.limit))
+      .skip((page - 1) * perPage)
+      .limit(limit)
       .populate("category")
       .populate("subs")
-      .sort({ createdAt: -1 })
+      .sort(sort)
       .exec();
     res.json(products);
+  } catch (e) {
+    res.status(400).json({
+      error: e.message,
+    });
+  }
+};
+
+exports.getProductsCount = async (req, res) => {
+  try {
+    const totalProducts = await Product.find({}).estimatedDocumentCount();
+    res.json(totalProducts);
   } catch (e) {
     res.status(500).json({
       error: e.message,
@@ -37,7 +53,10 @@ exports.getAllProducts = async (req, res) => {
 
 exports.getProduct = async (req, res) => {
   try {
-    const product = await Product.findOne({ slug: req.params.slug }).exec();
+    const product = await Product.findOne({ slug: req.params.slug })
+      .populate("category")
+      .populate("subs")
+      .exec();
     if (!product) {
       return res.status(404).json("Product is not available!");
     }
@@ -84,6 +103,52 @@ exports.updateProduct = async (req, res) => {
     if (!updatedProduct) {
       return res.status(404).json("coudn't find the product");
     } else {
+      res.json(updatedProduct);
+    }
+  } catch (e) {
+    res.status(500).json({
+      error: e.message,
+    });
+  }
+};
+
+exports.ratingProduct = async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const rating = req.body.rating;
+    const user = await User.findOne({ email: req.user.email }).exec();
+    const product = await Product.findById(productId).exec();
+
+    if (!product) {
+      return res.status(404).json("No Product found!");
+    }
+
+    //checking if user already left rating for this product
+    const existingUserRating = product.ratings.find(
+      (rating) => rating.postedBy.toString() === user._id.toString()
+    );
+
+    //if user rating doesn't exist, push the new rating to product rating array
+    if (!existingUserRating) {
+      const updatedProduct = await Product.findByIdAndUpdate(
+        productId,
+        {
+          $push: { ratings: { star: rating, postedBy: user._id } },
+        },
+        { new: true, runValidators: true }
+      );
+
+      res.json(updatedProduct);
+    }
+    //if user already left rating, update his exising rating for product
+    else {
+      const updatedProduct = await Product.updateOne(
+        { ratings: { $elemMatch: existingUserRating } },
+        {
+          $set: { "ratings.$.star": rating },
+        },
+        { new: true, runValidators: true }
+      );
       res.json(updatedProduct);
     }
   } catch (e) {

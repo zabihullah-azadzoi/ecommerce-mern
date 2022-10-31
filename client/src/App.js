@@ -4,7 +4,7 @@ import { Switch, Route } from "react-router-dom";
 //components
 import Login from "./components/pages/auth/Login";
 import Register from "./components/pages/auth/Register";
-import Home from "./components/pages/Home";
+import Home from "./components/pages/home/Home";
 import Header from "./components/nav/Header";
 import CompleteRegistration from "./components/pages/auth/RegisterCompletion";
 import ForgotPassword from "./components/pages/auth/ForgotPassword";
@@ -32,6 +32,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import ProductList from "./components/pages/admin/product/ProductList";
 import UpdateProduct from "./components/pages/admin/product/UpdateProduct";
+import Product from "./components/pages/home/product/Product";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -69,7 +70,10 @@ const App = () => {
       <Header></Header>
       <ToastContainer theme="colored" />
       <Switch>
+        {/* home routes */}
         <Route path="/" component={Home} exact />
+        <Route path="/product/:slug" component={Product} exact />
+
         <Route path="/register" component={Register} exact />
         <Route path="/register/complete" component={CompleteRegistration} />
         <Route path="/login" component={Login} />

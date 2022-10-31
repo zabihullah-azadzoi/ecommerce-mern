@@ -9,7 +9,7 @@ import {
   deleteProduct,
 } from "../../../../functions/productFunctions";
 
-import CardComponent from "../../../cards/Card";
+import AdminProductCard from "../../../cards/AdminProductCard";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -17,7 +17,7 @@ const ProductList = () => {
   const user = useSelector((state) => state.user);
 
   const renderAllProducts = () => {
-    getAllProducts(20)
+    getAllProducts(20, 1, "createdAt")
       .then((res) => {
         setProducts(res.data);
       })
@@ -52,7 +52,7 @@ const ProductList = () => {
           {products.length > 0 &&
             products.map((product) => {
               return (
-                <CardComponent
+                <AdminProductCard
                   product={product}
                   key={product._id}
                   deleteProductHandler={deleteProductHandler}
