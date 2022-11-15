@@ -12,6 +12,7 @@ const {
   updateProduct,
   getProductsCount,
   ratingProduct,
+  filterProducts,
 } = require("../controllers/productControllers");
 
 router.post("/api/product", authCheck, adminCheck, createProduct);
@@ -22,7 +23,8 @@ router.delete("/api/product/:slug", authCheck, adminCheck, deleteProduct);
 router.put("/api/product/:slug", authCheck, adminCheck, updateProduct);
 router.put("/api/product/rating/:id", authCheck, ratingProduct);
 
-// router.get("/api/products", getAllProducts);
+//filtering products
+router.post("/api/products/search", filterProducts);
 
 //getting all sub products based on a product id
 router.get("/api/product/subs/:id", getProductSubs);

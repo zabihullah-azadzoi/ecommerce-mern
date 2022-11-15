@@ -37,9 +37,13 @@ export const currentAdmin = async (authToken) => {
 };
 
 export const roleBasedRedirect = (history, role) => {
-  if (role === "admin") {
-    history.push("/admin/dashboard");
+  if (history.location.state) {
+    history.push(history.location.state.from);
   } else {
-    history.push("/user/history");
+    if (role === "admin") {
+      history.push("/admin/dashboard");
+    } else {
+      history.push("/user/history");
+    }
   }
 };

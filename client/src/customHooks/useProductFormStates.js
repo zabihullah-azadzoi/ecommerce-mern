@@ -34,7 +34,9 @@ const useProductFormStates = () => {
     if (category !== "") {
       getCategorySubs(category)
         .then((res) => setAllSubs(res.data))
-        .catch((e) => toast.error(e.response.data.error));
+        .catch((e) => {
+          toast.error(e.response.data.error);
+        });
     }
   }, [category]);
 

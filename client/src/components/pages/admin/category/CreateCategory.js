@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import AdminNavbar from "../../../nav/AdminNavbar";
-import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Modal } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -11,7 +10,11 @@ import {
 } from "../../../../functions/categoryFunctions";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  DeleteOutlined,
+  ExclamationCircleOutlined,
+} from "@ant-design/icons";
 
 const CreateCategory = () => {
   const [name, setName] = useState("");

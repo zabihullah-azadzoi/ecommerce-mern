@@ -1,0 +1,6 @@
+POST http://localhost:8000/api/products/search HTTP/1.1
+content-type: application/json
+
+{
+    "query": {"sub": "lenovo 4"}
+}

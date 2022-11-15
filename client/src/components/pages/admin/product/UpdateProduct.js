@@ -28,7 +28,12 @@ const UpdateProduct = () => {
   useEffect(() => {
     getProduct(slug)
       .then((res) => {
-        setValues(res.data);
+        setValues({
+          ...res.data,
+          category: res.data.category ? res.data.category._id : "",
+          subs:
+            res.data.subs.length > 0 ? res.data.subs.map((sub) => sub._id) : [],
+        });
       })
       .catch((e) => {
         toast.error(e.response.data.error);

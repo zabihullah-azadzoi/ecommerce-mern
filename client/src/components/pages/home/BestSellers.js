@@ -55,7 +55,7 @@ const BestSellers = () => {
         )
       )}
       <Pagination
-        className="text-center mt-5 mb-1"
+        className="text-center mt-5 mb-5"
         defaultCurrent={1}
         total={productsCount !== 0 ? Math.floor((productsCount / 3) * 10) : 10}
         onChange={(value) => setPage(value)}

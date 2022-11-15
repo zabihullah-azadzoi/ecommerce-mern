@@ -41,3 +41,21 @@ export const updateProduct = async (authtoken, product, slug) => {
     }
   );
 };
+
+export const ratingProduct = async (authtoken, productId, ratingStars) => {
+  return await axios.put(
+    `http://localhost:8000/api/product/rating/${productId}`,
+    {
+      rating: ratingStars,
+    },
+    {
+      headers: { authtoken },
+    }
+  );
+};
+
+export const filterProducts = async (arg) => {
+  return await axios.post("http://localhost:8000/api/products/search", {
+    query: arg,
+  });
+};

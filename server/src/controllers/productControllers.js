@@ -23,7 +23,7 @@ exports.getAllProducts = async (req, res) => {
   const limit = req.query.limit || {};
   const page = req.query.page || 1;
   const perPage = 3;
-  const sort = req.query.sort ? { [req.query.sort]: -1 } : { createdAt: -1 };
+  const sort = req.query.sort ? { [req.query.sort]: -1 } : { createdAt: -1 }; //exp --> sold or createdAt
   try {
     const products = await Product.find({})
       .skip((page - 1) * perPage)
@@ -101,7 +101,7 @@ exports.updateProduct = async (req, res) => {
     );
 
     if (!updatedProduct) {
-      return res.status(404).json("coudn't find the product");
+      return res.status(404).json("couldn't find the product");
     } else {
       res.json(updatedProduct);
     }
@@ -115,7 +115,7 @@ exports.updateProduct = async (req, res) => {
 exports.ratingProduct = async (req, res) => {
   try {
     const productId = req.params.id;
-    const rating = req.body.rating;
+    const rating = parseInt(req.body.rating);
     const user = await User.findOne({ email: req.user.email }).exec();
     const product = await Product.findById(productId).exec();
 
@@ -140,7 +140,7 @@ exports.ratingProduct = async (req, res) => {
 
       res.json(updatedProduct);
     }
-    //if user already left rating, update his exising rating for product
+    //if user already left rating, update his existing rating for product
     else {
       const updatedProduct = await Product.updateOne(
         { ratings: { $elemMatch: existingUserRating } },
@@ -164,6 +164,94 @@ exports.getProductSubs = async (req, res) => {
     res.json(subs);
   } catch (e) {
     res.status(500).json({
+      error: e.message,
+    });
+  }
+};
+
+// filtering products
+const filterHandler = async (req, res, query) => {
+  try {
+    const products = await Product.find(query)
+      .populate("category")
+      .populate("subs")
+      .populate({
+        path: "ratings",
+        populate: {
+          path: "postedBy",
+          select: ["_id", "name"],
+        },
+      })
+      .exec();
+
+    res.json(products);
+  } catch (e) {
+    res.status(400).json({
+      error: e.message,
+    });
+  }
+};
+
+// filtering based on rating
+const ratingFilterHandler = async (req, res, rating) => {
+  try {
+    const aggregation = await Product.aggregate([
+      { $project: { floorValue: { $floor: { $avg: "$ratings.star" } } } },
+      { $match: { floorValue: rating } },
+    ]);
+
+    await filterHandler(req, res, { _id: aggregation });
+  } catch (e) {
+    res.status(400).json({
+      error: e.message,
+    });
+  }
+};
+
+exports.filterProducts = async (req, res) => {
+  // console.log(req.body);
+  let query = "";
+  try {
+    const { text, price, categories, rating, sub, brand, color, shipping } =
+      req.body.query;
+    if (text) {
+      query = { $text: { $search: text } };
+      await filterHandler(req, res, query);
+    }
+    if (price) {
+      query = {
+        price: {
+          $gte: price[0],
+          $lte: price[1],
+        },
+      };
+      await filterHandler(req, res, query);
+    }
+    if (categories) {
+      query = { category: categories };
+      await filterHandler(req, res, query);
+    }
+    if (rating) {
+      ratingFilterHandler(req, res, rating);
+    }
+    if (sub) {
+      query = { subs: sub };
+      await filterHandler(req, res, query);
+    }
+    if (brand) {
+      query = { brand };
+      await filterHandler(req, res, query);
+    }
+    if (color) {
+      query = { color };
+      await filterHandler(req, res, query);
+    }
+    if (shipping) {
+      query = { shipping };
+      await filterHandler(req, res, query);
+    }
+  } catch (e) {
+    res.status(400).json({
       error: e.message,
     });
   }

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { getProduct } from "../../../../functions/productFunctions";
 import ProductView from "./ProductView";
+import RelatedProducts from "./RelatedProducts";
 import { toast } from "react-toastify";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
@@ -35,6 +36,7 @@ const Product = () => {
           <h3>Related Products</h3>
           <hr />
         </div>
+        <RelatedProducts product={product} />
       </div>
     </div>
   );

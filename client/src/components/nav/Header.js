@@ -4,10 +4,15 @@ import {
   FormOutlined,
   LockOutlined,
   LogoutOutlined,
+  ShoppingOutlined,
+  ShoppingCartOutlined,
 } from "@ant-design/icons";
-import { Menu } from "antd";
+import { Menu, Badge } from "antd";
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
+
+import Search from "./Search";
+
 import { auth } from "../../firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -17,7 +22,7 @@ const Header = () => {
   const history = useHistory();
   const [current, setCurrent] = useState("mail");
   const [userIsAvailable, setUserIsAvailable] = useState(false);
-  const user = useSelector((state) => state.user);
+  const { user, cart } = useSelector((state) => ({ ...state }));
   const onClick = (e) => {
     setCurrent(e.key);
   };
@@ -50,6 +55,22 @@ const Header = () => {
       icon: <HomeOutlined />,
     },
     {
+      label: <Link to="/shop">Shop</Link>,
+      key: "shop",
+      icon: <ShoppingOutlined />,
+    },
+    {
+      label: (
+        <Badge count={cart.length} offset={[10, 0]}>
+          {" "}
+          <Link to="/cart">Cart</Link>
+        </Badge>
+      ),
+      key: "cart",
+      icon: <ShoppingCartOutlined />,
+    },
+
+    {
       label: `${user && user.token ? user.email.split("@")[0] : "UserName"}`,
       icon: <UserOutlined />,
       className: "float-end",
@@ -76,6 +97,10 @@ const Header = () => {
         },
       ],
     },
+    {
+      label: <Search />,
+      className: "float-end",
+    },
   ];
   const items2 = [
     {
@@ -83,6 +108,22 @@ const Header = () => {
       key: "home",
       icon: <HomeOutlined />,
     },
+    {
+      label: <Link to="/shop">Shop</Link>,
+      key: "shop",
+      icon: <ShoppingOutlined />,
+    },
+    {
+      label: (
+        <Badge count={cart.length} offset={[10, 0]}>
+          {" "}
+          <Link to="/cart">Cart</Link>
+        </Badge>
+      ),
+      key: "cart",
+      icon: <ShoppingCartOutlined />,
+    },
+
     {
       label: <Link to="/register">Register</Link>,
       key: "register",
@@ -94,6 +135,10 @@ const Header = () => {
       key: "login",
       className: "float-end",
       icon: <LockOutlined />,
+    },
+    {
+      label: <Search />,
+      className: "float-end",
     },
   ];
   return (

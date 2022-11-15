@@ -24,6 +24,21 @@ exports.createOrUpdateUser = async (req, res) => {
   }
 };
 
+exports.updateAddress = async (req, res) => {
+  try {
+    const updatedUser = await User.findOneAndUpdate(
+      { email: req.user.email },
+      { address: req.body.address },
+      { new: true }
+    );
+    res.json(updatedUser);
+  } catch (e) {
+    res.status(400).json({
+      error: e.message,
+    });
+  }
+};
+
 exports.currentUser = async (req, res) => {
   try {
     const { email } = req.user;

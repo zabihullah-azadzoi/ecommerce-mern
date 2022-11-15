@@ -19,3 +19,7 @@ code {
 .carousel .slide img {
   height: 31.25rem;
 }
+
+.ant-drawer-title{
+  color: white !important
+}

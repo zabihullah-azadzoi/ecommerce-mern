@@ -11,6 +11,11 @@ const categoryRouter = require("./routes/categoryRoutes");
 const subRouter = require("./routes/subRoutes");
 const productRouter = require("./routes/productRoutes");
 const imagesUploadRouter = require("./routes/imagesUploadRoutes");
+const cartRouter = require("./routes/cartRoutes");
+const couponRouter = require("./routes/couponRoutes");
+const stripeRouter = require("./routes/stripeRoutes");
+const orderRouter = require("./routes/orderRoutes");
+const wishlistRouter = require("./routes/wishlistRoutes");
 
 //starting the database
 require("./mongoose");
@@ -28,6 +33,11 @@ app.use(categoryRouter);
 app.use(subRouter);
 app.use(productRouter);
 app.use(imagesUploadRouter);
+app.use(cartRouter);
+app.use(couponRouter);
+app.use(stripeRouter);
+app.use(orderRouter);
+app.use(wishlistRouter);
 
 //starting the server
 const port = process.env.PORT || 8000;
