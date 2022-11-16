@@ -41,7 +41,7 @@ const AdminNavbar = () => {
         </li>
 
         <li className="nav-item ">
-          <Link to="/user/password" className="nav-link">
+          <Link to="/admin/update-password" className="nav-link">
             PASSWORD
           </Link>
         </li>

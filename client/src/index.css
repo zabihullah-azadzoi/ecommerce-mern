@@ -1,25 +1,28 @@
 body {
   margin: 0;
-    font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100vh;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-#root{
+#root {
   width: 100%;
-  height:100%
+  height: 100%;
 }
-
+.app {
+  height: 100%;
+}
 
 /* product view carousel image sizing */
 .carousel .slide img {
   height: 31.25rem;
 }
 
-.ant-drawer-title{
-  color: white !important
+.ant-drawer-title {
+  color: white !important;
 }

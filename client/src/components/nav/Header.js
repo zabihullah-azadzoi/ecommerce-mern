@@ -147,7 +147,7 @@ const Header = () => {
       selectedKeys={[current]}
       mode="horizontal"
       items={userIsAvailable ? items1 : items2}
-      style={{ display: "block" }}
+      style={{ display: "block", position: "sticky", top: "0", left: "0" }}
     />
   );
 };

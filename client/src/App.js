@@ -33,6 +33,9 @@ const UserWishlist = lazy(() => import("./components/pages/user/UserWishlist"));
 const AdminDashboard = lazy(() =>
   import("./components/pages/admin/AdminDashboard")
 );
+const UpdateAdminPassword = lazy(() =>
+  import("./components/pages/admin/password/UpdateAdminPassword")
+);
 const CreateCategory = lazy(() =>
   import("./components/pages/admin/category/CreateCategory")
 );
@@ -192,6 +195,12 @@ const App = () => {
         <AdminProtectedRoute
           path="/admin/coupon"
           component={CreateCoupon}
+          exact
+        />
+
+        <AdminProtectedRoute
+          path="/admin/update-password"
+          component={UpdateAdminPassword}
           exact
         />
       </Switch>
