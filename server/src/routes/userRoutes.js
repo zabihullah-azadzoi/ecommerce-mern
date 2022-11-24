@@ -3,6 +3,7 @@ const {
   createOrUpdateUser,
   currentUser,
   updateAddress,
+  getAllUsers,
 } = require("../controllers/userControllers");
 
 const router = express.Router();
@@ -14,5 +15,7 @@ router.post("/api/current-user", authCheck, currentUser);
 router.post("/api/admin", authCheck, adminCheck, currentUser);
 
 router.patch("/api/user/address", authCheck, updateAddress);
+
+router.get("/api/users", authCheck, adminCheck, getAllUsers);
 
 module.exports = router;

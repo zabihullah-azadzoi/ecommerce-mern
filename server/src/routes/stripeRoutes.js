@@ -5,6 +5,6 @@ const { authCheck } = require("../middlewares/authCheck");
 
 const { createPaymentIntent } = require("../controllers/stripeControllers");
 
-router.post("/create-payment-intent", authCheck, createPaymentIntent);
+router.post("/api/create-payment-intent", authCheck, createPaymentIntent);
 
 module.exports = router;

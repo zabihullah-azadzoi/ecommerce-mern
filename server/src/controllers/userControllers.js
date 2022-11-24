@@ -1,12 +1,24 @@
-const { findOneAndUpdate } = require("../models/User");
 const User = require("../models/User");
 
 exports.createOrUpdateUser = async (req, res) => {
   try {
-    const { name, email, picture } = req.user;
+    if (req.body.userData) {
+      const user = await User.findOneAndUpdate(
+        { email: req.user.email },
+        { ...req.body.userData },
+        { new: true, runValidators: true }
+      );
+      if (user) {
+        res.json({
+          user,
+        });
+        return;
+      }
+    }
+    const { name, email } = req.user;
     const user = await User.findOneAndUpdate(
       { email },
-      { name, email, picture },
+      { name, email },
       { new: true }
     );
     if (user) {
@@ -39,10 +51,32 @@ exports.updateAddress = async (req, res) => {
   }
 };
 
+exports.getAllUsers = async (req, res) => {
+  try {
+    const allUsers = await User.find({});
+
+    res.json(allUsers);
+  } catch (e) {
+    res.status(500).json({
+      error: e.message,
+    });
+  }
+};
+
 exports.currentUser = async (req, res) => {
   try {
     const { email } = req.user;
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select([
+      "_id",
+      "name",
+      "email",
+      "occupation",
+      "phone",
+      "birthDate",
+      "image",
+      "role",
+      "company",
+    ]);
     if (user) {
       res.json({
         user,

@@ -1,17 +1,20 @@
 import axios from "axios";
 
 export const getCategory = async (slug) => {
-  return await axios.get(`http://localhost:8000/api/category/${slug}`, {});
+  return await axios.get(
+    `${process.env.REACT_APP_API_URL}/api/category/${slug}`,
+    {}
+  );
 };
 
 export const getAllCategories = async () => {
-  return await axios.get("http://localhost:8000/api/categories", {});
+  return await axios.get(`${process.env.REACT_APP_API_URL}/api/categories`, {});
 };
 
-export const createCategory = async (authtoken, categoryName) => {
+export const createCategory = async (authtoken, name, coverPhoto) => {
   return await axios.post(
-    "http://localhost:8000/api/category",
-    { name: categoryName },
+    `${process.env.REACT_APP_API_URL}/api/category`,
+    { name, coverPhoto },
     {
       headers: { authtoken },
     }
@@ -20,7 +23,7 @@ export const createCategory = async (authtoken, categoryName) => {
 
 export const updateCategory = async (authtoken, slug, name) => {
   return await axios.put(
-    `http://localhost:8000/api/category/${slug}`,
+    `${process.env.REACT_APP_API_URL}/api/category/${slug}`,
     { name },
     {
       headers: { authtoken },
@@ -28,7 +31,10 @@ export const updateCategory = async (authtoken, slug, name) => {
   );
 };
 export const deleteCategory = async (authtoken, slug) => {
-  return await axios.delete(`http://localhost:8000/api/category/${slug}`, {
-    headers: { authtoken },
-  });
+  return await axios.delete(
+    `${process.env.REACT_APP_API_URL}/api/category/${slug}`,
+    {
+      headers: { authtoken },
+    }
+  );
 };

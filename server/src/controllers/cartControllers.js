@@ -78,7 +78,11 @@ exports.applyCoupon = async (req, res) => {
 
     //verify coupon validity
     const validCoupon = await Coupon.findOne({ name: coupon });
-    if (!validCoupon) {
+    if (
+      !validCoupon ||
+      new Date(validCoupon.expireDate).toLocaleDateString() <
+        new Date().toLocaleDateString()
+    ) {
       return res.json({
         message: "Coupon is invalid or expired!",
       });
@@ -93,7 +97,7 @@ exports.applyCoupon = async (req, res) => {
       const updatedCart = await Cart.findOneAndUpdate(
         { orderedBy: user._id },
         { totalAfterDiscount },
-        { new: true }
+        { new: true, runValidators: true }
       );
       res.json(updatedCart);
     }

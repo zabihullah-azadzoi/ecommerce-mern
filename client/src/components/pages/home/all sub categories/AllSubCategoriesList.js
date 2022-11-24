@@ -26,7 +26,7 @@ const AllSubCategoriesList = () => {
       {isLoading ? (
         <h5 className="text-center">Loading...</h5>
       ) : subs.length > 0 ? (
-        <div className="row">
+        <div className="row w-100">
           {subs.map((sub) => {
             return (
               <div className="col text-center" key={sub._id}>

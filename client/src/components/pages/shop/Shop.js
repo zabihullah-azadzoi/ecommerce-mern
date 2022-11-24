@@ -65,7 +65,6 @@ const Shop = () => {
       })
       .catch((e) => {
         toast.error(e.response ? e.response.data.error : "an error occurred!");
-        console.log(e);
         setIsLoading(false);
       });
   };
@@ -211,7 +210,7 @@ const Shop = () => {
     <div className="container-fluid">
       <div className="row">
         <div className="col-md-3">
-          <p>filter products</p>
+          <p className="p-2">filter products</p>
           <ShopFiltersMenu // all filters menu component
             states={states}
             categoryFilterHandler={categoryFilterHandler}
@@ -224,19 +223,24 @@ const Shop = () => {
           />
         </div>
         <div className="col-md-9">
-          <div className="row">
-            <h3 className="mt-3 mb-3 text-danger">{title}</h3>
-            {isLoading
-              ? "Loading..."
-              : products && products.length > 0
-              ? products.map((product) => {
-                  return (
-                    <div className="col-md-4 text-center" key={product._id}>
-                      <HomeProductCard product={product} />
-                    </div>
-                  );
-                })
-              : "No Product found!"}
+          <div className="container">
+            <div className="row">
+              <h3 className="mt-3 mb-3 text-danger">{title}</h3>
+              {isLoading
+                ? "Loading..."
+                : products && products.length > 0
+                ? products.map((product) => {
+                    return (
+                      <div
+                        className="col-md-4 col-sm-6 text-center"
+                        key={product._id}
+                      >
+                        <HomeProductCard product={product} />
+                      </div>
+                    );
+                  })
+                : "No Product found!"}
+            </div>
           </div>
         </div>
       </div>

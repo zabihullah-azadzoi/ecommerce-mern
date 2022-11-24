@@ -12,9 +12,10 @@ import {
 import useProductFormStates from "../../../../customHooks/useProductFormStates";
 
 import { useParams, useHistory } from "react-router-dom";
-
 import { useSelector } from "react-redux";
+
 import { toast } from "react-toastify";
+import { Card } from "antd";
 
 const UpdateProduct = () => {
   const user = useSelector((state) => state.user);
@@ -58,20 +59,26 @@ const UpdateProduct = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col-md-2">
+        <div className="col-md-2 p-0">
           <AdminNavbar />
         </div>
         <div className="col-md-10">
-          <h3>Update Product</h3>
-          <ImagesUploadForm values={values} setValues={setValues} />
-          <CreateProductForm
-            productFormSubmitHandler={productFormUpdateHandler}
-            values={values}
-            valuesChangeHandler={valuesChangeHandler}
-            onSetValues={setValues}
-            categories={categories}
-            allSubs={allSubs}
-          />
+          <h4 className="mt-3 mb-5 ">Update Product</h4>
+          <div className="row">
+            <div className="col-md-8 offset-md-2 mb-5">
+              <Card>
+                <ImagesUploadForm values={values} setValues={setValues} />
+                <CreateProductForm
+                  productFormSubmitHandler={productFormUpdateHandler}
+                  values={values}
+                  valuesChangeHandler={valuesChangeHandler}
+                  onSetValues={setValues}
+                  categories={categories}
+                  allSubs={allSubs}
+                />
+              </Card>
+            </div>
+          </div>
         </div>
       </div>
     </div>

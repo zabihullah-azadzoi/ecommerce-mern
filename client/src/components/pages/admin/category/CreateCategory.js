@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import AdminNavbar from "../../../nav/AdminNavbar";
+import CreateCategoryForm from "../../../forms/CreateCategoryForm";
+
 import { Modal } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -10,6 +12,7 @@ import {
 } from "../../../../functions/categoryFunctions";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { Card } from "antd";
 import {
   EditOutlined,
   DeleteOutlined,
@@ -18,6 +21,7 @@ import {
 
 const CreateCategory = () => {
   const [name, setName] = useState("");
+  const [image, setImage] = useState("");
   const [search, setSearch] = useState("");
   const [categories, setCategories] = useState([]);
   const user = useSelector((state) => state.user);
@@ -38,7 +42,7 @@ const CreateCategory = () => {
 
   const createCategoryHandler = (e) => {
     e.preventDefault();
-    createCategory(user.token, name)
+    createCategory(user.token, name, image.image)
       .then((res) => {
         setName("");
         toast.success(`${res.data.name} created Succefully!`);
@@ -55,7 +59,6 @@ const CreateCategory = () => {
         renderAllCategories();
       })
       .catch((e) => {
-        console.log(e);
         toast.error(e.response.data.error);
       });
   };
@@ -77,60 +80,56 @@ const CreateCategory = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className=" col-md-2">
+        <div className=" col-md-2 p-0">
           <AdminNavbar />
         </div>
-        <div className="col">
-          <h3>Create new Category</h3>
-          <form onSubmit={createCategoryHandler}>
-            <div className="form-group">
-              <label htmlFor="name" className="form-label">
-                Name
-              </label>
-              <input
-                className="form-control border-bottom border-0"
-                name="name"
-                placeholder="Enter new Category name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <button type="submit" className="btn btn-dark mt-2 ">
-                Save
-              </button>
+        <div className="col-md-10">
+          <h4 className="mt-3 mb-5 ">Create new Category</h4>
+          <div className="row">
+            <div className="col-md-8 offset-md-2 mb-5">
+              <Card>
+                <CreateCategoryForm
+                  createCategoryHandler={createCategoryHandler}
+                  name={name}
+                  setName={setName}
+                  image={image}
+                  setImage={setImage}
+                />
+                <br />
+                <br />
+                <input
+                  type="search"
+                  className="form-control mt-3 mb-5 border-bottom border-0"
+                  placeholder="Search Category"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+                {categories.length > 0 &&
+                  categories.filter(searchFilter(search)).map((cat) => {
+                    return (
+                      <p
+                        style={{ fontSize: "20px" }}
+                        className="text-dark bg-light p-2 "
+                        key={cat._id}
+                      >
+                        {cat.name}
+                        <Link to={`/admin/category/${cat.slug}`}>
+                          <EditOutlined
+                            className="float-end ps-3 text-dark"
+                            role="button"
+                          />
+                        </Link>
+                        <DeleteOutlined
+                          className="float-end text-dark"
+                          role="button"
+                          onClick={() => showConfirm(cat.slug, cat.name)}
+                        />
+                      </p>
+                    );
+                  })}
+              </Card>
             </div>
-          </form>
-          <br />
-          <br />
-          <input
-            type="search"
-            className="form-control mt-3 mb-5 border-bottom border-0"
-            placeholder="Search Category"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          {categories.length > 0 &&
-            categories.filter(searchFilter(search)).map((cat) => {
-              return (
-                <p
-                  style={{ fontSize: "20px" }}
-                  className="text-dark bg-light p-2 "
-                  key={cat._id}
-                >
-                  {cat.name}
-                  <Link to={`/admin/category/${cat.slug}`}>
-                    <EditOutlined
-                      className="float-end ps-3 text-dark"
-                      role="button"
-                    />
-                  </Link>
-                  <DeleteOutlined
-                    className="float-end text-dark"
-                    role="button"
-                    onClick={() => showConfirm(cat.slug, cat.name)}
-                  />
-                </p>
-              );
-            })}
+          </div>
         </div>
       </div>
     </div>

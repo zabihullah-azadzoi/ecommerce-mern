@@ -2,6 +2,8 @@ import { useCallback } from "react";
 import { Menu, Slider, Checkbox, Radio, Space } from "antd";
 import StarRatings from "react-star-ratings";
 
+import useMenuModeToggler from "../../../customHooks/useMenuModeToggler";
+
 const brands = ["Apple", "Samsung", "Hp", "Dell", "Toshiba"];
 const colors = ["Black", "White", "Red", "Silver", "Blue"];
 
@@ -24,6 +26,9 @@ const ShopFiltersMenu = ({
     shippingValue,
     categoriesIds,
   } = states;
+
+  const { menuMode } = useMenuModeToggler();
+
   // category list checkbox options
   let options = [];
   if (categories.length > 0) {
@@ -207,7 +212,7 @@ const ShopFiltersMenu = ({
     <Menu
       defaultSelectedKeys={["1"]}
       defaultOpenKeys={["sub1", "sub2", "sub3", "sub4", "sub5", "sub6", "sub7"]}
-      mode="inline"
+      mode={menuMode}
       items={items}
     />
   );

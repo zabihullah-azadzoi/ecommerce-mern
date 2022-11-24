@@ -22,11 +22,11 @@ exports.createProduct = async (req, res) => {
 exports.getAllProducts = async (req, res) => {
   const limit = req.query.limit || {};
   const page = req.query.page || 1;
-  const perPage = 3;
+  const perPage = req.query.limit || 3;
   const sort = req.query.sort ? { [req.query.sort]: -1 } : { createdAt: -1 }; //exp --> sold or createdAt
   try {
     const products = await Product.find({})
-      .skip((page - 1) * perPage)
+      .skip((page - 1) * limit)
       .limit(limit)
       .populate("category")
       .populate("subs")
@@ -42,7 +42,7 @@ exports.getAllProducts = async (req, res) => {
 
 exports.getProductsCount = async (req, res) => {
   try {
-    const totalProducts = await Product.find({}).estimatedDocumentCount();
+    const totalProducts = await Product.estimatedDocumentCount();
     res.json(totalProducts);
   } catch (e) {
     res.status(500).json({
@@ -97,7 +97,7 @@ exports.updateProduct = async (req, res) => {
     const updatedProduct = await Product.findOneAndUpdate(
       { slug: req.params.slug },
       req.body.product,
-      { new: true }
+      { new: true, runValidators: true }
     );
 
     if (!updatedProduct) {
@@ -209,7 +209,6 @@ const ratingFilterHandler = async (req, res, rating) => {
 };
 
 exports.filterProducts = async (req, res) => {
-  // console.log(req.body);
   let query = "";
   try {
     const { text, price, categories, rating, sub, brand, color, shipping } =

@@ -111,38 +111,49 @@ const ProductView = ({ product }) => {
       <div className="row text-center">
         <div className="col-md-7">
           {/* product images carousel */}
-          <Carousel className="text-center" autoPlay="true" infiniteLoop="true">
-            {product && product.images.length > 0 ? (
-              product.images.map((image) => {
+          {product && product.images.length > 0 ? (
+            <Carousel
+              className="text-center"
+              autoPlay="true"
+              infiniteLoop="true"
+            >
+              {product.images.map((image) => {
                 return (
                   <div key={image.public_id}>
                     <img src={image.url} alt={image.url} />
                   </div>
                 );
-              })
-            ) : (
-              <div>
-                <img src={defaultImage} alt="Not available" />
-              </div>
-            )}
-          </Carousel>
-          <Tabs
-            defaultActiveKey="1"
-            type="card"
-            className="text-start"
-            items={[
-              {
-                label: "Description",
-                key: "description",
-                children: product.description,
-              },
-              {
-                label: "More",
-                key: "more",
-                children: " For more information contact us on xxxx xxx xxx",
-              },
-            ]}
-          ></Tabs>
+              })}
+            </Carousel>
+          ) : (
+            <div>
+              <img
+                src={defaultImage}
+                alt="Not available"
+                style={{ width: "100%", height: "30rem" }}
+              />
+            </div>
+          )}
+          <Card>
+            <Tabs
+              defaultActiveKey="1"
+              type="card"
+              style={{ minHeight: "10rem" }}
+              className="text-start"
+              items={[
+                {
+                  label: "Description",
+                  key: "description",
+                  children: product.description,
+                },
+                {
+                  label: "More",
+                  key: "more",
+                  children: " For more information contact us on xxxx xxx xxx",
+                },
+              ]}
+            ></Tabs>
+          </Card>
         </div>
         <div className="col-md-5">
           <h3 className="bg-primary text-light text-center p-4">

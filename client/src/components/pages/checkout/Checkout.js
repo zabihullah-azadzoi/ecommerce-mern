@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import AddressForm from "../../forms/AddressForm";
 import { useHistory } from "react-router-dom";
 import { Radio, Space } from "antd";
+import { Card } from "antd";
 
 const Checkout = () => {
   const [products, setProducts] = useState([]);
@@ -150,8 +151,8 @@ const Checkout = () => {
 
   return (
     <div className="container-fluid">
-      <div className="row">
-        <div className="col-md-6">
+      <div className="row mt-3 mb-5 ">
+        <Card className="col-md-6">
           <h3>Delivery Address</h3>
           <AddressForm saveAddressToDbHandler={saveAddressToDbHandler} />
           <br />
@@ -176,8 +177,8 @@ const Checkout = () => {
               Apply Coupon
             </button>
           </form>
-        </div>
-        <div className="col-md-6">
+        </Card>
+        <Card className="col-md-6">
           <h3>Order Summary</h3>
           <hr />
           <p>Products: {products.length}</p>
@@ -241,7 +242,7 @@ const Checkout = () => {
               </button>
             </div>
           </div>
-        </div>
+        </Card>
       </div>
     </div>
   );

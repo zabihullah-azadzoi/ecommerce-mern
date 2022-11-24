@@ -12,7 +12,7 @@ const CreateProductForm = ({
   const brands = ["Apple", "Samsung", "Hp", "Dell", "Toshiba"];
 
   return (
-    <form onSubmit={productFormSubmitHandler}>
+    <form onSubmit={productFormSubmitHandler} className=" pt-3 pb-2">
       <div className="mb-3">
         <label className="form-label" htmlFor="title">
           Title
@@ -144,7 +144,7 @@ const CreateProductForm = ({
           </label>
           <Select
             mode="multiple"
-            placeholder="Inserted are removed"
+            placeholder="choose sub categories"
             value={values.subs && values.subs}
             onChange={(value) =>
               onSetValues((prevState) => ({ ...prevState, subs: value }))

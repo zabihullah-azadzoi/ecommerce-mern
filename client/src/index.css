@@ -1,9 +1,13 @@
+html {
+  background-color: #f8f9fa;
+}
+
 body {
   margin: 0;
   font-family: Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height: 100vh;
+  height: 100%;
 }
 
 code {
@@ -12,10 +16,22 @@ code {
 }
 #root {
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  background-color: #f8f9fa;
 }
-.app {
-  height: 100%;
+
+.container-fluid {
+  /* background-color: #f8f9fa; */
+}
+
+.content-container {
+  min-height: calc(100vh - 24.3rem);
+  background-color: inherit;
+}
+.footer--pin {
+  position: relative;
+  left: 0;
+  bottom: 0;
 }
 
 /* product view carousel image sizing */
@@ -25,4 +41,18 @@ code {
 
 .ant-drawer-title {
   color: white !important;
+}
+
+.ant-pagination-item-link {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
+@media only screen and (max-width: 599px) {
+  .admin-user-menu {
+    position: inline-block !important;
+    height: auto !important;
+    max-width: 100% !important;
+  }
 }

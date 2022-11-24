@@ -1,38 +1,50 @@
 import axios from "axios";
 
 export const createProduct = async (authtoken, product) => {
-  return await axios.post("http://localhost:8000/api/product", product, {
-    headers: { authtoken },
-  });
+  return await axios.post(
+    `${process.env.REACT_APP_API_URL}/api/product`,
+    product,
+    {
+      headers: { authtoken },
+    }
+  );
 };
 
 export const getCategorySubs = async (id) => {
-  return await axios.get(`http://localhost:8000/api/product/subs/${id}`, {});
+  return await axios.get(
+    `${process.env.REACT_APP_API_URL}/api/product/subs/${id}`,
+    {}
+  );
 };
 
 export const getAllProducts = async (limit, page, sort) => {
   return await axios.get(
-    `http://localhost:8000/api/products/?limit=${limit}&page=${page}&sort=${sort}`
+    `${process.env.REACT_APP_API_URL}/api/products/?limit=${limit}&page=${page}&sort=${sort}`
   );
 };
 
 export const getProduct = async (slug) => {
-  return await axios.get(`http://localhost:8000/api/product/${slug}`);
+  return await axios.get(
+    `${process.env.REACT_APP_API_URL}/api/product/${slug}`
+  );
 };
 
 export const getProductsCount = async () => {
-  return await axios.get("http://localhost:8000/api/products/count");
+  return await axios.get(`${process.env.REACT_APP_API_URL}/api/products/count`);
 };
 
 export const deleteProduct = async (authtoken, slug) => {
-  return await axios.delete(`http://localhost:8000/api/product/${slug}`, {
-    headers: { authtoken },
-  });
+  return await axios.delete(
+    `${process.env.REACT_APP_API_URL}/api/product/${slug}`,
+    {
+      headers: { authtoken },
+    }
+  );
 };
 
 export const updateProduct = async (authtoken, product, slug) => {
   return await axios.put(
-    `http://localhost:8000/api/product/${slug}`,
+    `${process.env.REACT_APP_API_URL}/api/product/${slug}`,
     {
       product,
     },
@@ -44,7 +56,7 @@ export const updateProduct = async (authtoken, product, slug) => {
 
 export const ratingProduct = async (authtoken, productId, ratingStars) => {
   return await axios.put(
-    `http://localhost:8000/api/product/rating/${productId}`,
+    `${process.env.REACT_APP_API_URL}/api/product/rating/${productId}`,
     {
       rating: ratingStars,
     },
@@ -55,7 +67,10 @@ export const ratingProduct = async (authtoken, productId, ratingStars) => {
 };
 
 export const filterProducts = async (arg) => {
-  return await axios.post("http://localhost:8000/api/products/search", {
-    query: arg,
-  });
+  return await axios.post(
+    `${process.env.REACT_APP_API_URL}/api/products/search`,
+    {
+      query: arg,
+    }
+  );
 };

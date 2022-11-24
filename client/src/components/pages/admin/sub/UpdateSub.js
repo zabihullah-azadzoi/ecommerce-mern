@@ -4,8 +4,10 @@ import { getAllCategories } from "../../../../functions/categoryFunctions";
 import { updateSub, getSub } from "../../../../functions/subFunctions";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import { Card } from "antd";
 
 import { useParams, useHistory } from "react-router-dom";
+import CreateUpdateSubForm from "../../../forms/CreateUpdateSubForm";
 
 const UpdateSub = () => {
   const [name, setName] = useState("");
@@ -46,54 +48,25 @@ const UpdateSub = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col-md-2">
+        <div className="col-md-2 p-0">
           <AdminNavbar />
         </div>
         <div className="col-md-10">
-          <h3>Update sub category</h3>
-          <br />
-          <form onSubmit={updateSubHandler}>
-            <div className="form-group">
-              <label htmlFor="name" className="form-label">
-                Name
-              </label>
-              <input
-                className="form-control border-bottom border-0"
-                name="name"
-                required
-                placeholder="Enter new sub category name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <br />
-
-              <label htmlFor="categories" className="form-label">
-                Select Category
-              </label>
-              <select
-                name="categories"
-                required
-                className="form-control"
-                //  defaultValue={categories.find((cat) => cat._id === parent)}
-                onChange={(e) => setParent(e.target.value)}
-              >
-                <option value=""></option>
-                {categories.length > 0 &&
-                  categories.map((cat) => (
-                    <option
-                      key={cat._id}
-                      value={cat._id}
-                      selected={cat._id === parent}
-                    >
-                      {cat.name}
-                    </option>
-                  ))}
-              </select>
-              <button type="submit" className="btn btn-dark mt-2 ">
-                Update
-              </button>
+          <h4 className="mt-3 mb-5 ">Update sub category</h4>
+          <div className="row">
+            <div className="col-md-8 offset-md-2 mb-5">
+              <Card>
+                <CreateUpdateSubForm
+                  createSubHandler={updateSubHandler}
+                  name={name}
+                  setName={setName}
+                  categories={categories}
+                  setParent={setParent}
+                  parent={parent}
+                />
+              </Card>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>

@@ -90,6 +90,25 @@ exports.getAllOrders = async (req, res) => {
   }
 };
 
+exports.getOrdersSalesReport = async (req, res) => {
+  try {
+    const orders = await Order.aggregate([
+      {
+        $group: {
+          _id: { month: { $month: "$createdAt" } },
+          totalAmount: { $sum: { $divide: ["$paymentIntent.amount", 100] } },
+        },
+      },
+    ]);
+
+    res.json(orders);
+  } catch (e) {
+    res.status(500).json({
+      error: e.message,
+    });
+  }
+};
+
 exports.updateOrderStatus = async (req, res) => {
   try {
     const orderId = req.params.id;

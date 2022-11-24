@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const addToWishlist = async (authtoken, productId) => {
   return axios.post(
-    "http://localhost:8000/api/user/wishlist",
+    `${process.env.REACT_APP_API_URL}/api/user/wishlist`,
     { productId },
     {
       headers: { authtoken },
@@ -12,7 +12,7 @@ export const addToWishlist = async (authtoken, productId) => {
 
 export const removeFromWishlist = async (authtoken, productId) => {
   return axios.patch(
-    `http://localhost:8000/api/user/wishlist/${productId}`,
+    `${process.env.REACT_APP_API_URL}/api/user/wishlist/${productId}`,
     {},
     {
       headers: { authtoken },
@@ -21,7 +21,7 @@ export const removeFromWishlist = async (authtoken, productId) => {
 };
 
 export const getWishlist = async (authtoken) => {
-  return axios.get("http://localhost:8000/api/user/wishlist/", {
+  return axios.get(`${process.env.REACT_APP_API_URL}/api/user/wishlist`, {
     headers: { authtoken },
   });
 };

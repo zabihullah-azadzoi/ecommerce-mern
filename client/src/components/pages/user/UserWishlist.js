@@ -40,7 +40,7 @@ const UserWishlist = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className=" col-md-2 ">
+        <div className=" col-md-2 p-0">
           <UserNavbar />
         </div>
         <div className="col-md-10">

@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
 import AdminNavbar from "../../../nav/AdminNavbar";
-import DatePicker from "react-date-picker";
-import "react-date-picker/dist/DatePicker.css";
+import CreateCouponForm from "../../../forms/CreateCouponForm";
+
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { DeleteOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
-import { Modal } from "antd";
+import { Modal, Card } from "antd";
 import {
   createCoupon,
   getAllCoupons,
@@ -21,6 +21,7 @@ const CreateCoupon = () => {
   const user = useSelector((state) => state.user);
 
   const renderAllCoupons = useCallback(() => {
+    if (user === "null") return;
     getAllCoupons(user.token)
       .then((res) => {
         setAllCoupons(res.data);
@@ -77,83 +78,80 @@ const CreateCoupon = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col-md-2">
+        <div className="col-md-2 p-0">
           <AdminNavbar />
         </div>
         <div className="col-md-10">
-          <h3 className="mt-2 mb-3"> Create a new Coupon</h3>
-          <form onSubmit={createCouponHandler}>
-            <div className="mb-5 w-50">
-              <label htmlFor="name">Coupon Name</label>
-              <br />
-              <input
-                required
-                className="form-control"
-                name="name"
-                value={name}
-                autoFocus
-                onChange={(e) => setName(e.target.value)}
-              />
+          <h4 className="mt-3 mb-5 "> Create a new Coupon</h4>
+          <div className="row">
+            <div className="col-md-8 offset-md-2 mb-5">
+              <Card>
+                <CreateCouponForm
+                  createCouponHandler={createCouponHandler}
+                  name={name}
+                  setName={setName}
+                  discount={discount}
+                  setDiscount={setDiscount}
+                  expireDate={expireDate}
+                  setExpireDate={setExpireDate}
+                />
+                <br />
+                <hr />
+                <p>All available coupons</p>
+                {allCoupons.length > 0 ? (
+                  <div className="table-responsive">
+                    <table className="table">
+                      <thead className="bg-info text-light">
+                        <tr className="text-center">
+                          <th scope="col">Coupon</th>
+                          <th scope="col">Discount</th>
+                          <th scope="col">ExpiryDate</th>
+                          <th scope="col">Validity</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {allCoupons.map((coupon) => {
+                          return (
+                            <tr key={coupon._id} className="text-center">
+                              <td>{coupon.name}</td>
+                              <td>{coupon.discount}%</td>
+                              <td>
+                                {new Date(
+                                  coupon.expireDate
+                                ).toLocaleDateString()}
+                              </td>
+                              <td>
+                                {new Date(
+                                  coupon.expireDate
+                                ).toLocaleDateString() >=
+                                new Date().toLocaleDateString() ? (
+                                  <span className="text-success">Valid</span>
+                                ) : (
+                                  <span className="text-danger">Expired</span>
+                                )}
+                              </td>
+                              <td>
+                                <DeleteOutlined
+                                  className="text-danger"
+                                  style={{ cursor: "pointer" }}
+                                  onClick={() =>
+                                    showConfirm(coupon._id, coupon.name)
+                                  }
+                                />
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <p className="text-center">No coupon available</p>
+                )}
+              </Card>
             </div>
-            <div className="mb-5 w-50">
-              <label htmlFor="Discount">Discount (%) </label>
-              <br />
-              <input
-                required
-                className="form-control"
-                name="discount"
-                value={discount}
-                onChange={(e) => setDiscount(e.target.value)}
-              />
-            </div>
-            <div className="mb-5 w-50">
-              <label htmlFor="expireDate">Expiry Date</label>
-              <br />
-              <DatePicker
-                required
-                value={expireDate}
-                onChange={(date) => setExpireDate(date)}
-              />
-            </div>
-            <button className="btn btn-info">Save</button>
-          </form>
-          <br />
-          <hr />
-          <p>All available coupons</p>
-          {allCoupons.length > 0 ? (
-            <table className="table">
-              <thead className="bg-info text-light">
-                <tr className="text-center">
-                  <th scope="col">Coupon</th>
-                  <th scope="col">Discount</th>
-                  <th scope="col">ExpiryDate</th>
-                  <th scope="col">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {allCoupons.map((coupon) => {
-                  return (
-                    <tr key={coupon._id} className="text-center">
-                      <td>{coupon.name}</td>
-                      <td>%{coupon.discount}</td>
-                      <td>
-                        {new Date(coupon.expireDate).toLocaleDateString()}
-                      </td>
-                      <td>
-                        <DeleteOutlined
-                          className="text-danger"
-                          style={{ cursor: "pointer" }}
-                          onClick={() => showConfirm(coupon._id, coupon.name)}
-                        />
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          ) : (
-            <p className="text-center">No coupon available</p>
-          )}
+          </div>
         </div>
       </div>
     </div>

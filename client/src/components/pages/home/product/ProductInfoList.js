@@ -10,28 +10,24 @@ const ProductInfoList = ({ product }) => {
       <li className="list-group-item d-flex justify-content-between align-items-center border-0">
         Category
         <span className=" rounded-pill">
-          {
-            <Link to="/category">
+          {product.category && (
+            <Link to={`/category/${product.category.slug}`}>
               {product.category && product.category.name}
             </Link>
-          }
+          )}
         </span>
       </li>
       <li className="list-group-item d-flex justify-content-between align-items-center border-0">
         Sub Categories
         <span className=" rounded-pill">
-          {
-            <Link to="/category">
-              {product.subs &&
-                product.subs.map((sub) => {
-                  return (
-                    <span className="ms-4" key={sub._id}>
-                      {sub.name}
-                    </span>
-                  );
-                })}
-            </Link>
-          }
+          {product.subs &&
+            product.subs.map((sub) => {
+              return (
+                <Link to={`/sub/${sub.slug}`} key={sub._id}>
+                  <span className="ms-4">{sub.name}</span>
+                </Link>
+              );
+            })}
         </span>
       </li>
       <li className="list-group-item d-flex justify-content-between align-items-center border-0">

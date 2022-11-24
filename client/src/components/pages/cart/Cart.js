@@ -6,6 +6,8 @@ import { createCart } from "../../../functions/cartFunctions";
 
 import { toast } from "react-toastify";
 
+import { Card } from "antd";
+
 const Cart = () => {
   const { user, cart } = useSelector((state) => ({ ...state }));
   const dispatch = useDispatch();
@@ -16,7 +18,11 @@ const Cart = () => {
       .then((res) => {
         if (res.statusText === "OK") history.push("/cart/checkout");
       })
-      .catch((e) => console.log(e));
+      .catch((e) =>
+        toast.error(
+          e.response ? e.response.error.message : "an error occurred!"
+        )
+      );
   };
 
   const totalPriceHandler = () => {
@@ -85,7 +91,7 @@ const Cart = () => {
 
   return (
     <div className="container-fluid">
-      <div className="row">
+      <div className="row pb-5">
         <div className="col-md-8">
           <h5 className="mt-2">cart Items/ {cart.length}</h5>
           {cart.length > 0 ? (
@@ -103,31 +109,33 @@ const Cart = () => {
           )}
         </div>
         <div className="col-md-4">
-          <h4 className="mt-2">Order Summary</h4>
-          <hr />
-          <p>Products: </p>
-          {cart.map((product, index) => {
-            return (
-              <p key={index}>
-                {product.title} x {product.count} = ${product.price}
-              </p>
-            );
-          })}
-          <hr />
-          <p>
-            Total: <strong>${totalPriceHandler()}</strong>
-          </p>
-          <button className="btn btn-secondary" disabled={!cart.length}>
-            {user !== "null" ? (
-              <p onClick={saveCartToDBHandler} className="m-0">
-                Proceed to Checkout
-              </p>
-            ) : (
-              <Link to={{ pathname: "/login", state: { from: "/cart" } }}>
-                Login to Checkout
-              </Link>
-            )}
-          </button>
+          <Card className="mt-5">
+            <h4 className="">Order Summary</h4>
+            <hr />
+            <p>Products: </p>
+            {cart.map((product, index) => {
+              return (
+                <p key={index}>
+                  {product.title} x {product.count} = ${product.price}
+                </p>
+              );
+            })}
+            <hr />
+            <p>
+              Total: <strong>${totalPriceHandler()}</strong>
+            </p>
+            <button className="btn btn-secondary" disabled={!cart.length}>
+              {user ? (
+                <p onClick={saveCartToDBHandler} className="m-0">
+                  Proceed to Checkout
+                </p>
+              ) : (
+                <Link to={{ pathname: "/login", state: { from: "/cart" } }}>
+                  Login to Checkout
+                </Link>
+              )}
+            </button>
+          </Card>
         </div>
       </div>
     </div>

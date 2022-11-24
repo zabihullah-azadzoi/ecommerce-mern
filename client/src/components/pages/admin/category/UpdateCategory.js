@@ -8,6 +8,7 @@ import {
 } from "../../../../functions/categoryFunctions";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { Card } from "antd";
 
 const UpdateCategory = () => {
   const [name, setName] = useState("");
@@ -38,27 +39,33 @@ const UpdateCategory = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className=" col-md-2">
+        <div className=" col-md-2 p-0">
           <AdminNavbar />
         </div>
-        <div className="col">
-          <h3>Update Category</h3>
-          <form onSubmit={updateCategoryHandler}>
-            <div className="form-group">
-              <label htmlFor="name" className="form-label">
-                Name
-              </label>
-              <input
-                className="form-control"
-                name="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <button type="submit" className="btn btn-dark mt-2 ">
-                Update
-              </button>
+        <div className="col-md-10">
+          <h4 className="mt-3 mb-5 ">Update Category</h4>
+          <div className="row">
+            <div className="col-md-8 offset-md-2 mb-5">
+              <Card>
+                <form onSubmit={updateCategoryHandler}>
+                  <div className="form-group">
+                    <label htmlFor="name" className="form-label">
+                      Name
+                    </label>
+                    <input
+                      className="form-control"
+                      name="name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                    <button type="submit" className="btn btn-dark mt-5 ">
+                      Update
+                    </button>
+                  </div>
+                </form>
+              </Card>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>

@@ -14,7 +14,7 @@ const cardBorderColorHandler = (orderStatus) => {
     case "Cancelled":
       return "red";
     case "Completed":
-      return "greenyellow";
+      return "green";
     default:
       return "white";
   }
@@ -83,39 +83,41 @@ const OrderCard = ({ order, admin = false, updateOrderStatusHandler }) => {
           </div>
         </div>
         <div className="row">
-          <table className="table mt-3 mb-3">
-            <thead className="bg-info text-light">
-              <tr className="text-center">
-                <th scope="col">Title</th>
-                <th scope="col">Price</th>
-                <th scope="col">Brand</th>
-                <th scope="col">Color</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Shipping</th>
-              </tr>
-            </thead>
-            <tbody>
-              {order.products.length > 0 &&
-                order.products.map((product) => {
-                  return (
-                    <tr key={product._id} className="text-center">
-                      <td>{product.product.title}</td>
-                      <td>${product.product.price}</td>
-                      <td>{product.product.brand}</td>
-                      <td>{product.color}</td>
-                      <td>{product.count}</td>
-                      <td>
-                        {product.product.shipping === "yes" ? (
-                          <CheckCircleOutlined className="text-success" />
-                        ) : (
-                          <CloseCircleOutlined className="text-danger" />
-                        )}
-                      </td>
-                    </tr>
-                  );
-                })}
-            </tbody>
-          </table>
+          <div className="table-responsive">
+            <table className="table mt-3 mb-3">
+              <thead className="bg-info text-light">
+                <tr className="text-center">
+                  <th scope="col">Title</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Brand</th>
+                  <th scope="col">Color</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Shipping</th>
+                </tr>
+              </thead>
+              <tbody>
+                {order.products.length > 0 &&
+                  order.products.map((product) => {
+                    return (
+                      <tr key={product._id} className="text-center">
+                        <td>{product.product.title}</td>
+                        <td>${product.product.price}</td>
+                        <td>{product.product.brand}</td>
+                        <td>{product.color}</td>
+                        <td>{product.count}</td>
+                        <td>
+                          {product.product.shipping === "yes" ? (
+                            <CheckCircleOutlined className="text-success" />
+                          ) : (
+                            <CloseCircleOutlined className="text-danger" />
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </table>
+          </div>
         </div>
         {admin ? (
           orderStatusSelectorHandler(order)

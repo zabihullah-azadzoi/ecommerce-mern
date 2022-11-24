@@ -1,13 +1,13 @@
 import {
   HomeOutlined,
-  UserOutlined,
   FormOutlined,
   LockOutlined,
   LogoutOutlined,
   ShoppingOutlined,
   ShoppingCartOutlined,
+  DashboardOutlined,
 } from "@ant-design/icons";
-import { Menu, Badge } from "antd";
+import { Menu, Badge, Avatar, Image } from "antd";
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 
@@ -18,10 +18,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 const Header = () => {
-  const dispatch = useDispatch();
-  const history = useHistory();
   const [current, setCurrent] = useState("mail");
   const [userIsAvailable, setUserIsAvailable] = useState(false);
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   const { user, cart } = useSelector((state) => ({ ...state }));
   const onClick = (e) => {
     setCurrent(e.key);
@@ -38,11 +40,11 @@ const Header = () => {
     try {
       await auth.signOut();
 
+      history.push("/login");
       dispatch({
         type: "LOGOUT",
         payload: "null",
       });
-      history.push("/login");
     } catch (e) {
       toast.error(e.message);
     }
@@ -71,8 +73,31 @@ const Header = () => {
     },
 
     {
-      label: `${user && user.token ? user.email.split("@")[0] : "UserName"}`,
-      icon: <UserOutlined />,
+      icon:
+        user && user.image ? (
+          <Avatar
+            style={{ width: "2.3rem", height: "2.3rem", marginRight: "-8px" }}
+            src={
+              <img
+                alt=""
+                src={user.image}
+                style={{
+                  width: "2.3rem",
+                }}
+              />
+            }
+          />
+        ) : (
+          <Avatar
+            style={{
+              marginRight: "-8px",
+              color: "#fff",
+              backgroundColor: "#0077b6",
+            }}
+          >
+            {user && user.name && user.name.charAt(0).toUpperCase()}
+          </Avatar>
+        ),
       className: "float-end",
       children: [
         {
@@ -85,6 +110,7 @@ const Header = () => {
                 ) : (
                   <Link to="/user/history">Dashboard</Link>
                 ),
+              icon: <DashboardOutlined />,
               key: "setting:1",
             },
             {
@@ -145,9 +171,18 @@ const Header = () => {
     <Menu
       onClick={onClick}
       selectedKeys={[current]}
+      className="shadow-sm"
       mode="horizontal"
       items={userIsAvailable ? items1 : items2}
-      style={{ display: "block", position: "sticky", top: "0", left: "0" }}
+      style={{
+        display: "block",
+        position: "fixed",
+        top: "0",
+        left: "0",
+        height: "3rem",
+        width: "100%",
+        zIndex: "10000",
+      }}
     />
   );
 };

@@ -40,6 +40,7 @@ exports.createCategory = async (req, res) => {
     }
     const category = await new Category({
       name: req.body.name,
+      coverPhoto: req.body.coverPhoto,
       slug: slugify(req.body.name),
     }).save();
     res.json(category);

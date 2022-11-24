@@ -8,12 +8,16 @@ import {
 } from "../../../../functions/subFunctions";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  DeleteOutlined,
+  ExclamationCircleOutlined,
+} from "@ant-design/icons";
 
 import { Link } from "react-router-dom";
 
-import { ExclamationCircleOutlined } from "@ant-design/icons";
-import { Modal } from "antd";
+import { Modal, Card } from "antd";
+import CreateUpdateSubForm from "../../../forms/CreateUpdateSubForm";
 
 const CreateSub = () => {
   const [name, setName] = useState("");
@@ -76,80 +80,58 @@ const CreateSub = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col-md-2">
+        <div className="col-md-2 p-0">
           <AdminNavbar />
         </div>
         <div className="col-md-10">
-          <h3>Create a new sub category</h3>
-          <form onSubmit={createSubHandler}>
-            <div className="form-group">
-              <label htmlFor="name" className="form-label">
-                Name
-              </label>
-              <input
-                className="form-control border-bottom border-0"
-                name="name"
-                required
-                placeholder="Enter new sub category name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <br />
-
-              <label htmlFor="categories" className="form-label">
-                Select Category
-              </label>
-              <select
-                name="categories"
-                required
-                className="form-control"
-                onChange={(e) => setParent(e.target.value)}
-              >
-                <option value=""></option>
-                {categories.length > 0 &&
-                  categories.map((cat) => (
-                    <option key={cat._id} value={cat._id}>
-                      {cat.name}
-                    </option>
-                  ))}
-              </select>
-              <button type="submit" className="btn btn-dark mt-2 ">
-                Save
-              </button>
-            </div>
-          </form>
-          <br />
-          <br />
-          <input
-            type="search"
-            className="form-control mt-3 mb-5 border-bottom border-0"
-            placeholder="Search Category"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          {subs.length > 0 &&
-            subs.filter(searchFilter(search)).map((sub) => {
-              return (
-                <p
-                  style={{ fontSize: "20px" }}
-                  className="text-dark bg-light p-2 "
-                  key={sub._id}
-                >
-                  {sub.name}
-                  <Link to={`/admin/sub/${sub.slug}`}>
-                    <EditOutlined
-                      className="float-end ps-3 text-dark"
-                      role="button"
-                    />
-                  </Link>
-                  <DeleteOutlined
-                    className="float-end text-dark"
-                    role="button"
-                    onClick={() => showConfirm(sub.slug, sub.name)}
+          <h4 className="mt-3 mb-5 ">Create a new sub category</h4>
+          <div className="row">
+            <div className="col-md-8 offset-md-2 mb-5">
+              <Card>
+                <CreateUpdateSubForm
+                  createSubHandler={createSubHandler}
+                  name={name}
+                  setName={setName}
+                  setParent={setParent}
+                  categories={categories}
+                />
+                <br />
+                <br />
+                <div>
+                  <input
+                    type="search"
+                    className="form-control mt-3 mb-5 border-bottom border-0"
+                    placeholder="Search Category"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
                   />
-                </p>
-              );
-            })}
+                  {subs.length > 0 &&
+                    subs.filter(searchFilter(search)).map((sub) => {
+                      return (
+                        <p
+                          style={{ fontSize: "20px" }}
+                          className="text-dark bg-light p-2 "
+                          key={sub._id}
+                        >
+                          {sub.name}
+                          <Link to={`/admin/sub/${sub.slug}`}>
+                            <EditOutlined
+                              className="float-end ps-3 text-dark"
+                              role="button"
+                            />
+                          </Link>
+                          <DeleteOutlined
+                            className="float-end text-dark"
+                            role="button"
+                            onClick={() => showConfirm(sub.slug, sub.name)}
+                          />
+                        </p>
+                      );
+                    })}
+                </div>
+              </Card>
+            </div>
+          </div>
         </div>
       </div>
     </div>

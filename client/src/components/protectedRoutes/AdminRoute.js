@@ -7,10 +7,11 @@ import { toast } from "react-toastify";
 
 const AdminProtectedRoute = ({ children, ...rest }) => {
   const [isAvailable, setIsAvailable] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state.user);
   useEffect(() => {
     if (user && user.token) {
+      setLoading(true);
       currentAdmin(user.token)
         .then((res) => {
           setIsAvailable(true);
@@ -23,12 +24,16 @@ const AdminProtectedRoute = ({ children, ...rest }) => {
         });
     }
   }, [user]);
-  return isAvailable && !loading ? (
-    <Route {...rest} />
-  ) : (
-    <h1 className="text-danger p-5">
-      <RedirectCountdown />
-    </h1>
+  return (
+    <>
+      {isAvailable && !loading && <Route {...rest} />}
+
+      {!isAvailable && !loading && (
+        <h1 className="text-danger p-5">
+          <RedirectCountdown />
+        </h1>
+      )}
+    </>
   );
 };
 

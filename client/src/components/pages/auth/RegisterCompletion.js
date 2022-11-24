@@ -53,6 +53,7 @@ const CompleteRegistration = () => {
                 name: res.data.user.name,
                 email: res.data.user.email,
                 token: userIdTokenResult.token,
+                image: res.data.user.image && res.data.user.image.url,
                 role: res.data.user.role,
                 _id: res.data.user._id,
               },
@@ -84,6 +85,7 @@ const CompleteRegistration = () => {
               type="password"
               className="form-control mt-3"
               value={password}
+              placeholder="Type your password"
               onChange={(e) => setPassword(e.target.value)}
             />
             <button type="submit" className="btn btn-raised mt-2 float-end">

@@ -30,7 +30,6 @@ exports.createPaymentIntent = async (req, res) => {
     const clientSecret = paymentIntent.client_secret;
     res.send({ clientSecret, cartTotal, payable });
   } catch (e) {
-    console.log(e);
     res.status(500).json({
       error: e.message,
     });

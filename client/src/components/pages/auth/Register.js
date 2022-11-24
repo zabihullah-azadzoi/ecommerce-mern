@@ -13,8 +13,7 @@ const Register = () => {
         url: process.env.REACT_APP_REGISTRATION_REDIRECT_URL,
         handleCodeInApp: true,
       };
-      const data = await auth.sendSignInLinkToEmail(email, authSettings);
-      console.log("registration form", data);
+      await auth.sendSignInLinkToEmail(email, authSettings);
       toast.success(
         "Email has been sent to your account, please click on the link to continue registration!"
       );
@@ -26,17 +25,18 @@ const Register = () => {
 
   return (
     <div className="container p-5">
-      <div className="row">
-        <div className="col-md-6 offset-md-3">
-          <h1>Register</h1>
+      <div className="row justify-content-center">
+        <div className="col-md-5 card p-5">
+          <h3>Register</h3>
           <form onSubmit={submitHandler}>
             <input
               type="email"
-              className="form-control"
+              placeholder="Enter your email address"
+              className="form-control mt-5 border-bottom border-0 shadow-sm"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <button type="submit" className="btn btn-raised mt-2 float-end">
+            <button type="submit" className="btn btn-primary mt-4 float-end">
               Register
             </button>
           </form>

@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const createCart = async (authtoken, cart) => {
   return await axios.post(
-    "http://localhost:8000/api/user/cart",
+    `${process.env.REACT_APP_API_URL}/api/user/cart`,
     { cart },
     {
       headers: { authtoken },
@@ -11,20 +11,20 @@ export const createCart = async (authtoken, cart) => {
 };
 
 export const getCart = async (authtoken) => {
-  return await axios.get("http://localhost:8000/api/user/cart", {
+  return await axios.get(`${process.env.REACT_APP_API_URL}/api/user/cart`, {
     headers: { authtoken },
   });
 };
 
 export const deleteCart = async (authtoken) => {
-  return await axios.delete("http://localhost:8000/api/user/cart", {
+  return await axios.delete(`${process.env.REACT_APP_API_URL}/api/user/cart`, {
     headers: { authtoken },
   });
 };
 
 export const applyCoupon = async (authtoken, coupon) => {
   return await axios.post(
-    "http://localhost:8000/api/user/cart/coupon",
+    `${process.env.REACT_APP_API_URL}/api/user/cart/coupon`,
     { coupon },
     {
       headers: { authtoken },

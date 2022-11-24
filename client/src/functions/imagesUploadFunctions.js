@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const imageUpload = async (authtoken, image) => {
   return await axios.post(
-    "http://localhost:8000/api/product/image",
+    `${process.env.REACT_APP_API_URL}/api/cloudinary/image`,
     {
       image,
     },
@@ -14,7 +14,7 @@ export const imageUpload = async (authtoken, image) => {
 
 export const imageRemove = async (authtoken, imageId) => {
   return await axios.delete(
-    `http://localhost:8000/api/product/image/${imageId}`,
+    `${process.env.REACT_APP_API_URL}/api/cloudinary/image/${imageId}`,
     {
       headers: { authtoken },
     }

@@ -11,7 +11,7 @@ import {
 } from "../../functions/imagesUploadFunctions";
 import { toast } from "react-toastify";
 
-const ImagesUploadForm = ({ values, setValues }) => {
+const ImagesUploadForm = ({ values, setValues, label = "Upload Images" }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const user = useSelector((state) => state.user);
@@ -65,30 +65,31 @@ const ImagesUploadForm = ({ values, setValues }) => {
 
   return (
     <div className="mb-3">
-      {values.images.map((image) => {
-        return (
-          <span
-            className="avatar-item"
-            style={{ marginRight: "20px" }}
-            key={image.public_id}
-          >
-            <Badge
-              count="X"
-              style={{ transform: "none", cursor: "pointer" }}
-              onClick={() => removeImageAvatarHandler(image.public_id)}
+      {values.images.length > 0 &&
+        values.images.map((image) => {
+          return (
+            <span
+              className="avatar-item"
+              style={{ marginRight: "20px" }}
+              key={image.public_id}
             >
-              <Avatar
-                src={image.url}
-                size={80}
-                shape="round"
-                className=" mb-3"
-              />
-            </Badge>
-          </span>
-        );
-      })}
+              <Badge
+                count="X"
+                style={{ transform: "none", cursor: "pointer" }}
+                onClick={() => removeImageAvatarHandler(image.public_id)}
+              >
+                <Avatar
+                  src={image.url}
+                  size={80}
+                  shape="round"
+                  className=" mb-3"
+                />
+              </Badge>
+            </span>
+          );
+        })}
       <label className="form-label d-block" htmlFor="images">
-        Upload Images
+        {label}
       </label>
       {isLoading ? (
         <LoadingOutlined />

@@ -66,15 +66,15 @@ const HomeProductCard = ({
       <AverageRating product={product} />
       <Card
         hoverable
-        className=" mb-3 d-inline-block"
-        style={{ width: "22.5rem" }}
+        className="card mb-3 d-inline-block"
+        style={{ width: "19rem" }}
         cover={
           <img
             alt={product.title}
             src={
               product.images.length > 0 ? product.images[0].url : defaultImage
             }
-            style={{ height: 180 }}
+            style={{ height: "17rem" }}
           />
         }
         actions={
@@ -140,7 +140,10 @@ const HomeProductCard = ({
           title={
             <div>
               <span>{product.title}</span>{" "}
-              <span className="float-end text-secondary">{`$${product.price}`}</span>
+              <h5 className="float-end text-dark">
+                <sup>$</sup>
+                {`${product.price}`}
+              </h5>
             </div>
           }
           className="text-start w-100 d-inline-block"

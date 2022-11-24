@@ -1,16 +1,19 @@
 import axios from "axios";
 
 export const getAllSubs = async () => {
-  return await axios.get("http://localhost:8000/api/subs", {});
+  return await axios.get(`${process.env.REACT_APP_API_URL}/api/subs`, {});
 };
 
 export const getSub = async (slug) => {
-  return await axios.get(`http://localhost:8000/api/sub/${slug}`, {});
+  return await axios.get(
+    `${process.env.REACT_APP_API_URL}/api/sub/${slug}`,
+    {}
+  );
 };
 
 export const createSub = async (authtoken, name, parent) => {
   return await axios.post(
-    "http://localhost:8000/api/sub",
+    `${process.env.REACT_APP_API_URL}/api/sub`,
     { name, parent },
     {
       headers: {
@@ -20,14 +23,17 @@ export const createSub = async (authtoken, name, parent) => {
   );
 };
 export const deleteSub = async (authtoken, slug) => {
-  return await axios.delete(`http://localhost:8000/api/sub/${slug}`, {
-    headers: { authtoken },
-  });
+  return await axios.delete(
+    `${process.env.REACT_APP_API_URL}/api/sub/${slug}`,
+    {
+      headers: { authtoken },
+    }
+  );
 };
 
 export const updateSub = async (authtoken, slug, name, parent) => {
   return await axios.put(
-    `http://localhost:8000/api/sub/${slug}`,
+    `${process.env.REACT_APP_API_URL}/api/sub/${slug}`,
     { name, parent },
     {
       headers: { authtoken },
