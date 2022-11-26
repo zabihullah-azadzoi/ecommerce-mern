@@ -1,4 +1,4 @@
-// server.js
+// server.js  --> this file is used for heroku deployment, we don't need it in development or other hosting services
 const express = require("express");
 const compression = require("compression");
 const path = require("path");
