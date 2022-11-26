@@ -14,6 +14,9 @@ An ecommerce store built with MERN stack, and utilizes third party API's. This e
   * Mongoose schemas to model the application data
   * React for displaying UI components
   * Redux to manage application's state
+  * cloudinary used for storing images in the cloud
+  * firebase used for authentication 
+ 
   
 
 
