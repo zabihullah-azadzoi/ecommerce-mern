@@ -14,6 +14,9 @@ An ecommerce store built with MERN stack, and utilizes third party API's. This e
   * Mongoose schemas to model the application data
   * React for displaying UI components
   * Redux to manage application's state
+  * cloudinary used for storing images in the cloud
+  * firebase used for authentication 
+ 
   
 
 
@@ -29,10 +32,10 @@ This application is deployed on Heroku. Please check it out :smile: [here](https
 ```
  Create .env file in client that includes:
 
-  * REACT_APP_REGISTRATION_REDIRECT_URL
-  * REACT_APP_RESET_PASSWORD_REDIRECT_URL
+  * REACT_APP_REGISTRATION_REDIRECT_URL="http://localhost:3000/register/complete"
+  * REACT_APP_RESET_PASSWORD_REDIRECT_URL="http://localhost:3000/login"
   * REACT_APP_STRIPE_SECRET
-  * REACT_APP_API_URL
+  * REACT_APP_API_URL=REACT_APP_API_URL="http://localhost:8000"
 
  Create .env file in server that includes:
 
