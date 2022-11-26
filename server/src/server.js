@@ -36,10 +36,10 @@ const limiter = rateLimit({
 });
 
 //global middlewares
+app.use(cors());
 app.use(helmet());
 app.use(compression());
 app.use("/api", limiter);
-app.use(cors());
 app.use(bodyParser.json({ limit: "4mb" }));
 app.use(mongoSanitize());
 app.use(xss()); // avoiding cross-side-scripting attacks

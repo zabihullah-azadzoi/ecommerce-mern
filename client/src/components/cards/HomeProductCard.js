@@ -142,7 +142,7 @@ const HomeProductCard = ({
               <span>{product.title}</span>{" "}
               <h5 className="float-end text-dark">
                 <sup>$</sup>
-                {`${product.price}`}
+                {`${new Intl.NumberFormat("en-us").format(product.price)}`}
               </h5>
             </div>
           }

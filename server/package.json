@@ -1,8 +1,8 @@
 {
-  "name": "server",
+  "name": "mern-ecommerce-api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "nodemon src/server.js"
   },
@@ -13,6 +13,7 @@
     "cloudinary": "^1.32.0",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-jwt": "^7.7.5",
@@ -28,6 +29,10 @@
     "stripe": "^10.17.0",
     "uuid": "^9.0.0",
     "xss-clean": "^0.1.1"
+  },
+  "engines": {
+    "npm": "^8.0.0 ",
+    "node": "^18.0.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"

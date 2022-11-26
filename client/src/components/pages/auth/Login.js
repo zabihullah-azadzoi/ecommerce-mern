@@ -13,8 +13,8 @@ import LoginForm from "../../forms/LoginForm";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState("zabihullahazadzoi848249@gmail.com");
-  const [password, setPassword] = useState("zabih12345");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [emailAuthIsLoading, setEmailAuthIsLoading] = useState(false);
   const [googleAuthIsLoading, setGoogleAuthIsLoading] = useState(false);
   const history = useHistory();
