@@ -29,10 +29,10 @@ This application is deployed on Heroku. Please check it out :smile: [here](https
 ```
  Create .env file in client that includes:
 
-  * REACT_APP_REGISTRATION_REDIRECT_URL
-  * REACT_APP_RESET_PASSWORD_REDIRECT_URL
+  * REACT_APP_REGISTRATION_REDIRECT_URL="http://localhost:3000/register/complete"
+  * REACT_APP_RESET_PASSWORD_REDIRECT_URL="http://localhost:3000/login"
   * REACT_APP_STRIPE_SECRET
-  * REACT_APP_API_URL
+  * REACT_APP_API_URL=REACT_APP_API_URL="http://localhost:8000"
 
  Create .env file in server that includes:
 
