@@ -1,4 +1,5 @@
 .env
 node_modules
 test.http
-config/fbServiceAccountKey.json
+config
+
