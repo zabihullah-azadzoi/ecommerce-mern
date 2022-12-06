@@ -2,7 +2,9 @@
 
 
 # dependencies
-/node_modules
+server/**/node_modules
+server/**/.env
+server/**/config
 
 /.pnp
 .pnp.js
