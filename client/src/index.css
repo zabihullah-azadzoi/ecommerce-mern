@@ -43,16 +43,14 @@ code {
   color: white !important;
 }
 
-.ant-pagination-item-link {
-  display: flex !important;
-  justify-content: center;
-  align-items: center;
-}
-
 @media only screen and (max-width: 599px) {
   .admin-user-menu {
     position: inline-block !important;
     height: auto !important;
     max-width: 100% !important;
   }
+}
+
+svg {
+  vertical-align: baseline !important;
 }
