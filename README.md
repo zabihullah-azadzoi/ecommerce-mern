@@ -45,6 +45,18 @@ This application is deployed on Heroku. Please check it out :smile: [here](https
   * CLOUDINARY_API_KEY
   * CLOUDINARY_API_SECRET
   * STRIPE_SECRET
+ 
+ create a folder named config in server directory and add a file named fbServiceAccountKey.json inside it, copy your private_key from your firebase     account and paste it in fbServiceAccountKey.json and must have the following structure
+  * "type":
+  * "project_id":
+  * "private_key_id":
+  * "private_key":
+  * "client_email":
+  * "client_id":
+  * "auth_uri":
+  * "token_uri":
+  * "auth_provide_x509_cert_url":
+  * "client_x509J_cert_url":
   
 ```
 
